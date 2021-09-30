@@ -14,43 +14,62 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
 
-    public EmployeeController (EmployeeService theEmployeeService){
+    /**
+     * @param theEmployeeService
+     */
+    public EmployeeController(EmployeeService theEmployeeService) {
         employeeService = theEmployeeService;
 
     }
+    /**
+     * @param theModel
+     * @return
+     */
     @GetMapping("/showFormForAdd")
-    public String showFormForAdd(Model theModel){
+    public String showFormForAdd(Model theModel) {
         Employee theEmployee = new Employee();
         theModel.addAttribute("employee", theEmployee);
         return "/employees/employee-form";
     }
-
+    /**
+     * @param theEmployee
+     * @return
+     */
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
+    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
 
         employeeService.save(theEmployee);
 
         return "redirect:/employees/list";
     }
-
+    /**
+     * @param theModel
+     * @return
+     */
     @GetMapping("/list")
-    public String listEmployees(Model theModel){
+    public String listEmployees(Model theModel) {
         List<Employee> theEmployees = employeeService.findAll();
         theModel.addAttribute("employees", theEmployees);
         return "/employees/list-employees";
     }
+    /**
+     * @param theId
+     * @param theModel
+     * @return
+     */
     @GetMapping("/showFormForUpdate")
-    public String howFormForUpdate(@RequestParam("employeeId") int theId, Model theModel){
+    public String howFormForUpdate(@RequestParam("employeeId") int theId, Model theModel) {
         Employee theEmployee = employeeService.findById(theId);
         theModel.addAttribute("employee", theEmployee);
         return "/employees/employee-form";
-
     }
-
+    /**
+     * @param theId
+     * @return
+     */
     @GetMapping("/delete")
-    public String delete (@RequestParam("employeeId") int theId){
+    public String delete(@RequestParam("employeeId") int theId) {
         employeeService.deleteById(theId);
         return "redirect:/employees/list";
-
     }
 }

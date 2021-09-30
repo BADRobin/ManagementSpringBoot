@@ -11,17 +11,23 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
-
+    /**
+     *
+     * @param theEmployeeRepository
+     */
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository theEmployeeRepository) {
         employeeRepository = theEmployeeRepository;
     }
-
     @Override
     public List<Employee> findAll() {
         return employeeRepository.findAllByOrderByLastNameAsc();
     }
-
+    /**
+     *
+     * @param theId
+     * @return
+     */
     @Override
     public Employee findById(int theId) {
         Optional<Employee> result = employeeRepository.findById(theId);
@@ -33,12 +39,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return theEmployee;
     }
-
+    /**
+     *
+     * @param theEmployee
+     */
     @Override
     public void save(Employee theEmployee) {
         employeeRepository.save(theEmployee);
     }
-
+    /**
+     *
+     * @param theId
+     */
     @Override
     public void deleteById(int theId) {
         employeeRepository.deleteById(theId);
